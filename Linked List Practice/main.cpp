@@ -107,9 +107,33 @@ template<class T>
 void Node<T>::insert(T x)
 {
    Node<T> *temp = new Node();
-   temp->data = x;
-   temp->next = head<T>;
-   head<T> = temp;
+   Node<T> *newNode = new Node();
+
+   if(head<T> == NULL)
+   {
+      temp->data = x;
+      temp->next = NULL;
+      head<T> = temp;
+      return;
+   }
+
+   temp = head<T>;
+   while(temp != NULL)
+   {
+
+      if(temp->next == NULL)
+      {
+
+         newNode->data = x;
+         newNode->next = NULL;
+         temp->next = newNode;
+         return;
+
+      }
+      temp = temp->next;
+
+   }
+
 }
 
 
