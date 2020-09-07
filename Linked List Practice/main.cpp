@@ -23,6 +23,7 @@ public:
    void display();
    void insertAt(T data, int position);
    void deleteNode(int position);
+   void reverseList();
 };
 
 
@@ -51,10 +52,15 @@ int main() {
    node.insert(2);
    node.insert(3);
    node.insert(4);
+   node.insert(5);
 
    node.display();
 
-   node.deleteNode(4);
+   //node.deleteNode(4);
+
+   //node.display();
+
+   node.reverseList();
 
    node.display();
 
@@ -183,4 +189,24 @@ void Node<T>::display()
       temp = temp->next;
    }
    cout << endl;
+}
+
+
+template<class T>
+void Node<T>::reverseList()
+{
+   Node<T> *current, *pre, *next;
+   current = head<T>;
+   pre = NULL;
+   next = NULL;
+
+   while(current != NULL)
+   {
+      next = current->next;
+      current->next = pre;
+      pre = current;
+      current = next;
+   }
+
+   head<T> = pre;
 }
