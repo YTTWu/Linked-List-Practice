@@ -22,6 +22,7 @@ public:
    void insert(T x);
    void display();
    void insertAt(T data, int position);
+   void deleteNode(int position);
 };
 
 
@@ -32,33 +33,34 @@ Node<T> *head;
 
 int main() {
 
-   Node<string> node;
-   int userInput;
-   string x;
+   Node<int> node;
 
+   /*
+   node.insertAt(1, 1);
+   node.insertAt(2, 2);
+   node.insertAt(3, 3);
 
-
-   cout << "How many numbers? ";
-   cin >> userInput;
-
-   for(int i = 0; i < userInput; i++)
-   {
-      cout << "Enter the number: ";
-      cin >> x;
-
-      node.insert(x);
-      node.display();
-   }
-
-   int position;
-   cout << "Where do you want to insert your node: ";
-   cin >> position;
-
-   cout << "Enter the number: ";
-   cin >> x;
-
-   node.insertAt(x, position);
    node.display();
+
+   node.insertAt(4, 1);
+   node.insertAt(5, 2);
+
+   node.display();
+*/
+   node.insert(1);
+   node.insert(2);
+   node.insert(3);
+   node.insert(4);
+
+   node.display();
+
+   node.deleteNode(4);
+
+   node.display();
+
+
+
+
 }
 
 
@@ -108,6 +110,38 @@ void Node<T>::insert(T x)
    temp->data = x;
    temp->next = head<T>;
    head<T> = temp;
+}
+
+
+
+template<class T>
+void Node<T>::deleteNode(int position)
+{
+   int x = 1;
+   Node<T> *temp = new Node();
+   temp = head<T>;
+
+
+   if(position == 1)
+   {
+      head<T> = temp->next;
+      delete temp;
+   }
+   else
+   {
+      while(temp != NULL)
+      {
+
+         if(x == position-1)
+         {
+            temp->next = temp->next->next;
+            delete temp;
+            return;
+         }
+         x++;
+         temp = temp->next;
+      }
+   }
 }
 
 
