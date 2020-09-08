@@ -10,12 +10,17 @@
 
 using namespace std;
 
+
+
+
+
 template<class T>
 class Node
 {
 private:
    T data;
    Node<T> *next;
+   Node<T> *head;
 
 public:
    Node();
@@ -24,6 +29,13 @@ public:
    void insertAt(T data, int position);
    void deleteNode(int position);
    void reverseList();
+   void reverseListRecursion(Node<T> *head);
+   void print(Node<T> *head);
+   void reversePrint(Node<T> *head);
+
+   T getData()const;
+   Node<T> getNext();
+   Node<T> *getHead();
 };
 
 
@@ -64,6 +76,15 @@ int main() {
 
    node.display();
 
+   node.print(node.getHead());
+
+
+
+   node.reverseListRecursion(node.getHead());
+
+
+   node.display();
+
 
 
 
@@ -71,7 +92,7 @@ int main() {
 
 
 template<class T>
-Node<T>::Node(){}
+Node<T>::Node():head(NULL){}
 
 
 
@@ -79,7 +100,7 @@ template<class T>
 void Node<T>::insertAt(T data, int position)
 {
    int x = 2;
-   Node<T> *temp = head<T>;
+   Node<T> *temp = head;
    Node<T> *newNode = new Node();//-----------------Node<T> *newNode;
    newNode->data = data;
    newNode->next = NULL;
@@ -87,7 +108,7 @@ void Node<T>::insertAt(T data, int position)
    if(position == 1)
    {
       newNode->next = temp;
-      head<T> = newNode;
+      head = newNode;
       return;
    }
    else
@@ -115,15 +136,15 @@ void Node<T>::insert(T x)
    Node<T> *temp = new Node();
    Node<T> *newNode = new Node();
 
-   if(head<T> == NULL)
+   if(head == NULL)
    {
       temp->data = x;
       temp->next = NULL;
-      head<T> = temp;
+      head = temp;
       return;
    }
 
-   temp = head<T>;
+   temp = head;
    while(temp != NULL)
    {
 
@@ -149,12 +170,12 @@ void Node<T>::deleteNode(int position)
 {
    int x = 1;
    Node<T> *temp = new Node();
-   temp = head<T>;
+   temp = head;
 
 
    if(position == 1)
    {
-      head<T> = temp->next;
+      head = temp->next;
       delete temp;
    }
    else
@@ -181,7 +202,8 @@ void Node<T>::deleteNode(int position)
 template<class T>
 void Node<T>::display()
 {
-   Node<T> *temp = head<T>;
+
+   Node<T> *temp = head;
    cout << "List is: ";
    while(temp != NULL)
    {
@@ -189,6 +211,9 @@ void Node<T>::display()
       temp = temp->next;
    }
    cout << endl;
+
+
+
 }
 
 
@@ -196,7 +221,7 @@ template<class T>
 void Node<T>::reverseList()
 {
    Node<T> *current, *pre, *next;
-   current = head<T>;
+   current = head;
    pre = NULL;
    next = NULL;
 
@@ -208,5 +233,73 @@ void Node<T>::reverseList()
       current = next;
    }
 
-   head<T> = pre;
+   head = pre;
+}
+
+
+template<class T>
+void Node<T>::reverseListRecursion(Node<T> *head_local)
+{
+   if(head_local->next == NULL)
+   {
+      this->head = head_local;
+      return;
+   }
+
+   reverseListRecursion(head_local->next);
+
+   Node<T> *temp = head_local->next;
+   temp->next = head_local;
+   head_local->next = NULL;
+}
+
+
+
+template<class T>
+void Node<T>::print(Node<T> *head)
+{
+   if(head == NULL)
+   {
+      cout << endl;
+      return;
+   }
+
+   cout << head->data << " ";
+
+   print(head->next);
+}
+
+
+template<class T>
+void Node<T>::reversePrint(Node<T> *head)
+{
+   if(head == NULL)
+   {
+      return;
+   }
+   reversePrint(head->next);
+   cout << head->data << " ";
+
+}
+
+
+
+template<class T>
+T Node<T>::getData()const
+{
+   return data;
+}
+
+
+template<class T>
+Node<T> Node<T>::getNext()
+{
+   return next;
+}
+
+
+template<class T>
+Node<T> *Node<T>::getHead()
+{
+   return head;
 }
